@@ -1,20 +1,21 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
-dicionario = " !“#$%&‘()*+,-./0123456789:;<=>/?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~"
-tamanho_dicionario = len(dicionario)
-mensagem = ""
-
 def cifracao():
+    dicionario = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    tamanho_dicionario = len(dicionario)
+    mensagem = ""
     chave_cifracao = ""
     mensagem_cifrada = ""
 
     # Input da mensagem
-    mensagem = input("Mensagem a ser cifrada: ")
+    mensagem = input("Mensagem a ser cifrada: ").upper()
+    print()
     tamanho_mensagem = len(mensagem)
 
     # Input da chave para cifrar
-    chave_cifracao = input("Key para cifrar: ")
+    chave_cifracao = input("Key para cifrar: ").upper()
+    print()
 
     # Repetir a chave até chegar no tamanho da mensagem
     chave_expandida = chave_cifracao
@@ -40,26 +41,32 @@ def cifracao():
             index_cifra = index + index_caracter_chave
 
             # Se o index cifrado ultrapassa o tamanho do dicionário, da a volta
-            if index_cifra > tamanho_dicionario:
+            if index_cifra >= tamanho_dicionario:
                 index_cifra -= tamanho_dicionario
 
             # Encontra caracter cifrado e monta a cifra
             caracter_cifrado = dicionario[index_cifra]
             mensagem_cifrada += caracter_cifrado
-
-    return("Mensagem cifrada: " + mensagem_cifrada)
+    print("Mensagem Cifrada :: ")
+    print()
+    return(mensagem_cifrada)
 
 
 def decifracao():
+    dicionario = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    tamanho_dicionario = len(dicionario)
+    mensagem = ""
     chave_decifracao = ""
     mensagem_decifrada = ""
 
     # Input da mensagem
-    mensagem = input("Mensagem a ser decifrada: ")
+    mensagem = input("Mensagem a ser decifrada: ").upper()
+    print()
     tamanho_mensagem = len(mensagem)
 
     # Input da chave para decifrar
-    chave_decifracao = input("Key para decifrar: ")
+    chave_decifracao = input("Key para decifrar: ").upper()
+    print()
 
     # Repete a chave até chegar no tamanho da mensagem
     chave_expandida = chave_decifracao
@@ -85,15 +92,13 @@ def decifracao():
             index_decifra = index - index_caracter_chave
 
             # Se o index cifrado ultrapassa o tamanho do dicionário, da a volta
-            if index_decifra > tamanho_dicionario:
+            if index_decifra >= tamanho_dicionario:
                 index_decifra -= tamanho_dicionario
 
             # Encontra caractere decifrado e monta a mensagem
             caracter_decifrado = dicionario[index_decifra]
             mensagem_decifrada += caracter_decifrado
 
-    return("Mensagem decifrada: " + mensagem_decifrada)
-
-
-print(cifracao())
-print(decifracao())
+    print("Mensagem Decifrada :: ")
+    print()
+    return(mensagem_decifrada)
