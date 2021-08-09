@@ -3,18 +3,13 @@
 
 from CifraVigenere import cifracao, decifracao
 
-
-cifraEx = "euqueroatacaraalemanhaaoamanhecer"
-
-
-# Agrupa as letras dada uma cifra, um ponto de partida e um intervalo
+# Agrupa as letras dados uma cifra, um ponto de partida e um intervalo
 def Agrupa(cifra, start, skip):
     grupoLetras = ""
     for index in range(start, len(cifra), skip):
         grupoLetras += cifra[index]
 
     print("Grupo de Letras Selecionadas ::")
-    print()
     print(grupoLetras)
     print()
     return grupoLetras
@@ -39,30 +34,40 @@ def FrequenciaLetras(grupo):
         frequencias[indice] = (valor/len(grupo)) * 100
 
     print("Frequência de cada letra do grupo ::")
-    print()
     print(frequencias)
     print()
     return frequencias
 
-def repeats(string):
+# Encontra sequências de caracteres repetidos na mensagem cifrada
+def SequenciasRepetidas(string):
+    repetidas = []
     partida = 0
+    
     while partida <= len(string):
         for x in range(1, len(string)):
             substring = string[partida:x]
 
-            if len(substring) > 2 and string[x:].find(substring) != -1:
-                print(substring)
+            # Testa caracter a caracter os matches com mais de 3 caracteres
+            if len(substring) > 3 and string[x:].find(substring) != -1:
+                substringAux = substring
+                # print(substringAux)
+            
+            # Se a substring é maior que 3, não possui um match e a substring-1
+            # possui um match, guarda a substring -1 na lista e move o contador
+            # de varredura para depois dessa sequência que possui um match
+            elif len(substring) > 3 and string[x:].find(string[partida:x-1]) != -1:
+                repetidas.append(string[partida:x-1])
+                partida = x
+                print("Substrings repetidas :: ")
+                print(repetidas)
                 print()
             
             if x == (len(string) -1):
                 partida +=1
-
-    print(string)
+    return 0
 
 # Testes
 cifraTeste = cifracao()
-print(cifraTeste)
-print()
-repeats(cifraTeste)
-print()
+SequenciasRepetidas(cifraTeste)
 grupo1 = Agrupa(cifraTeste, 0, 3)
+FrequenciaLetras(grupo1)

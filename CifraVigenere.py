@@ -48,6 +48,7 @@ def cifracao():
             caracter_cifrado = dicionario[index_cifra]
             mensagem_cifrada += caracter_cifrado
     print("Mensagem Cifrada :: ")
+    print(mensagem_cifrada)
     print()
     return(mensagem_cifrada)
 
@@ -100,5 +101,6 @@ def decifracao():
             mensagem_decifrada += caracter_decifrado
 
     print("Mensagem Decifrada :: ")
+    print(mensagem_decifrada)
     print()
     return(mensagem_decifrada)
