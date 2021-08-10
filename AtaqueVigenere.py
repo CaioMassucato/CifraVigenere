@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*
 
+
 from CifraVigenere import cifracao, decifracao
 from functools import reduce
 
@@ -45,6 +46,8 @@ def FrequenciaLetras(grupo):
     return frequencias
 
 # Encontra sequências de caracteres repetidos na mensagem cifrada
+# para então calcular os fatores das distâncias entre as repetições
+# para aproximar o tamanho da chave
 def SequenciasRepetidas(string):
     repetidas = []
     indexRepetidas = []
@@ -55,13 +58,13 @@ def SequenciasRepetidas(string):
             substring = string[partida:x]
 
             # Testa caracter a caracter os matches com mais de 3 caracteres
-            if len(substring) > 2 and string[x:].find(substring) != -1:
+            if len(substring) > 3 and string[x:].find(substring) != -1:
                 substringAux = substring
             
             # Se a substring é maior que 3, não possui um match e a substring-1
             # possui um match, guarda a substring -1 na lista e move o contador
             # de varredura para depois dessa sequência que possui um match
-            elif len(substring) > 2 and string[x:].find(string[partida:x-1]) != -1:
+            elif len(substring) > 3 and string[x:].find(string[partida:x-1]) != -1:
                 repetidas.append(string[partida:x-1])
                 indexRepetidas.append(string[x:].index(string[partida:x-1]) + 1)
 
@@ -85,7 +88,8 @@ def SequenciasRepetidas(string):
                 partida +=1
 
     print("Fatores e suas ocorrências::")
-    print(fatores)
+    fatoresSorted = sorted(fatores.items(), key=lambda x: x[1], reverse=True)
+    for i in fatoresSorted[1:20]: print(i[0], ": ", i[1])
     print()
 
     return fatores
