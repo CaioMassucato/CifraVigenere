@@ -15,6 +15,10 @@ def cifracao():
 
     # Input da chave para cifrar
     chave_cifracao = input("Key para cifrar: ").upper()
+    for letra in chave_cifracao:
+        if letra not in dicionario:
+            print("Chave Inválida, tente novamente.")
+            return "Chave inválida"
     print()
 
     # Repetir a chave até chegar no tamanho da mensagem
@@ -67,6 +71,10 @@ def decifracao():
 
     # Input da chave para decifrar
     chave_decifracao = input("Key para decifrar: ").upper()
+    for letra in chave_decifracao:
+        if letra not in dicionario:
+            print("Chave Inválida, tente novamente.")
+            return "Chave inválida"
     print()
 
     # Repete a chave até chegar no tamanho da mensagem

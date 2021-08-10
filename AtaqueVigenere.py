@@ -2,6 +2,12 @@
 # -*- coding: utf-8 -*
 
 from CifraVigenere import cifracao, decifracao
+from functools import reduce
+
+# Encontra os fatores de um dado número n
+def Fatores(n):    
+    return set(reduce(list.__add__, 
+                ([i, n//i] for i in range(1, int(n**0.5) + 1) if n % i == 0)))
 
 # Agrupa as letras dados uma cifra, um ponto de partida e um intervalo
 def Agrupa(cifra, start, skip):
@@ -41,6 +47,7 @@ def FrequenciaLetras(grupo):
 # Encontra sequências de caracteres repetidos na mensagem cifrada
 def SequenciasRepetidas(string):
     repetidas = []
+    indexRepetidas = []
     partida = 0
     
     while partida <= len(string):
@@ -48,23 +55,40 @@ def SequenciasRepetidas(string):
             substring = string[partida:x]
 
             # Testa caracter a caracter os matches com mais de 3 caracteres
-            if len(substring) > 3 and string[x:].find(substring) != -1:
+            if len(substring) > 2 and string[x:].find(substring) != -1:
                 substringAux = substring
-                # print(substringAux)
             
             # Se a substring é maior que 3, não possui um match e a substring-1
             # possui um match, guarda a substring -1 na lista e move o contador
             # de varredura para depois dessa sequência que possui um match
-            elif len(substring) > 3 and string[x:].find(string[partida:x-1]) != -1:
+            elif len(substring) > 2 and string[x:].find(string[partida:x-1]) != -1:
                 repetidas.append(string[partida:x-1])
+                indexRepetidas.append(string[x:].index(string[partida:x-1]) + 1)
+
+                # Calcula os fatores de cada distância entre repetições
+                fatoresAux = []
+                fatores = {}
+                for numero in indexRepetidas:
+                    fatoresAux.append(Fatores(numero))
+                
+                # Organiza o número de ocorrências para cada fator
+                for conjunto in fatoresAux:
+                    for valor in conjunto:
+                        if valor in fatores:
+                            fatores[valor] += 1
+                        else:
+                            fatores[valor] = 1
+
                 partida = x
-                print("Substrings repetidas :: ")
-                print(repetidas)
-                print()
             
             if x == (len(string) -1):
                 partida +=1
-    return 0
+
+    print("Fatores e suas ocorrências::")
+    print(fatores)
+    print()
+
+    return fatores
 
 # Testes
 cifraTeste = cifracao()
