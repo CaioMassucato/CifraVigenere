@@ -21,6 +21,7 @@ def cifracao(tipoEntrada):
                 mensagem = mensagem.replace(caracter, "")
         print()
 
+    mensagem = mensagem.replace(" ","")
     tamanho_mensagem = len(mensagem)
 
     # Input da chave para cifrar
@@ -76,7 +77,7 @@ def decifracao(possuiChave):
     mensagem = ""
     chave_decifracao = ""
     mensagem_decifrada = ""
-
+    
     if possuiChave == "1":
         # Input da mensagem
         mensagem = input("Mensagem a ser decifrada: ").rstrip("\n").upper()
@@ -93,6 +94,8 @@ def decifracao(possuiChave):
                 print("Chave Inválida, tente novamente.")
                 return "Chave inválida"
         print()
+
+        mensagem = mensagem.replace(" ","")
 
         # Repete a chave até chegar no tamanho da mensagem
         chave_expandida = chave_decifracao
@@ -140,4 +143,6 @@ def decifracao(possuiChave):
         for caracter in mensagem:
             if caracter in caracteres_ignorados:
                 mensagem = mensagem.replace(caracter, "")
+
+        mensagem = mensagem.replace(" ","")
         return mensagem

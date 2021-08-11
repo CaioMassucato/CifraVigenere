@@ -63,7 +63,7 @@ dicionario = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 tamanho_dicionario = len(dicionario)
 
-caracteres_ignorados = r".,-;:()'\{\}[]/\\?!0123456789_=+*@#$%¨&<>~´`"
+caracteres_ignorados = r" .,-;:()'\{\}[]/\\?!0123456789_=+*@#$%¨&<>~´`"
 
 exemplo_ingles = "This template allows for the presentation of text in a language other than English alongside an English translation of that text. \
                     It is primarily designed for rendering poetic texts and their translations in parallel columns that are responsive to devices with display sizes smaller than a personal computer's screen. \

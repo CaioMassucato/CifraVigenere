@@ -163,11 +163,12 @@ def ChiQuadrado(ocorrencias, tamanhoMensagem, frequenciaLingua):
 
   return scoreTotal
 
+# Calcula o offset para as ocorrencias
 def OcorrenciasOffset(ocorrenciasCaracter, offset):
   ocorrenciasOffset = {}
   for char, ocorrencia in ocorrenciasCaracter.items():
     char_i = dicionario.find(char)
-    offset_char = dicionario[(char_i + offset) % len(dicionario)]
+    offset_char = dicionario[(char_i - offset) % len(dicionario)]
     ocorrenciasOffset[offset_char] = ocorrencia
   return ocorrenciasOffset
 
