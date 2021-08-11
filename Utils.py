@@ -1,8 +1,8 @@
 #!/usr/bin/python3
-# -*- coding: utf-8 -*
+# -*- coding: utf-8 -*-
 
 from functools import reduce
-from Constantes import IC_portugues, IC_ingles, frequenciasIngles, frequenciasPortugues
+from Constantes import IC_portugues, IC_ingles, frequenciasIngles, frequenciasPortugues, dicionario
 
 # Encontra os fatores de um dado número n
 def Fatores(n):    
@@ -50,11 +50,10 @@ def Agrupa(cifra, start, tamanhosProvaveis):
     for grupo, valor in grupos.items():
         print("Grupo ", grupo, ": ", valor)
         print()
-    return grupos
-
+    return grupos, skip
 
 # Calcula a frequência de cada letra no grupo
-def FrequenciaLetras(grupo):
+def OcorrenciasLetras(grupo):
     ocorrencias = {}
     indices = ocorrencias.keys()
 
@@ -70,13 +69,13 @@ def FrequenciaLetras(grupo):
     # Calcula a frequencia de cada letra com base na ocorrência
     for indice in indices:
         valor = ocorrencias.get(indice)
-        frequencias[indice] = (valor/len(grupo)) * 100
+        frequencias[indice] = (valor/len(grupo))
 
     print("---------------- Frequência de cada letra do grupo ----------------")
     print()
-    print(frequencias)
+    print(ocorrencias)
     print()
-    return frequencias
+    return ocorrencias
 
 # Encontra sequências de caracteres repetidos na mensagem cifrada
 # para então calcular os fatores das distâncias entre as repetições
@@ -135,3 +134,61 @@ def SequenciasRepetidas(string):
     print()
 
     return fatoresSorted
+
+# Calcula o indice de concorrencia do grupo selecionado
+def CalculaCI(frequencias, tamanhoChave):
+
+    ciGrupo = 0
+    for frequencia, valor in frequencias.items():
+        ciLetra = valor**2
+        ciGrupo += ciLetra
+    ciMedio = ciGrupo / tamanhoChave
+
+    return ciMedio
+
+# Calcula o score Chi Quadrado para as ocorrências
+def ChiQuadrado(ocorrencias, tamanhoMensagem, frequenciaLingua):
+  scoreChiQuadrado = {}
+  for char in frequenciaLingua.keys():
+    frequenciaEsperada = frequenciaLingua[char]
+    ocorrenciaEsperada = frequenciaEsperada * tamanhoMensagem
+    ocorrenciaCaracter = ocorrencias.get(char, 0)
+    erro = ocorrenciaCaracter - ocorrenciaEsperada
+    erroNormalizado = erro * erro / ocorrenciaEsperada
+    scoreChiQuadrado[char] = erroNormalizado
+
+  scoreTotal = 0
+  for charScore in scoreChiQuadrado.values():
+    scoreTotal += charScore
+
+  return scoreTotal
+
+def OcorrenciasOffset(ocorrenciasCaracter, offset):
+  ocorrenciasOffset = {}
+  for char, ocorrencia in ocorrenciasCaracter.items():
+    char_i = dicionario.find(char)
+    offset_char = dicionario[(char_i + offset) % len(dicionario)]
+    ocorrenciasOffset[offset_char] = ocorrencia
+  return ocorrenciasOffset
+
+# Chutes da chave
+def AdivinhaChave(mensagem, grupos, tamanhoChave, expected_char_dist):
+  caracteresChave = []
+
+  # Itera pelos grupos selecionados
+  for i, grupo in grupos.items():
+    ocorrenciasCaracteres = OcorrenciasLetras(grupo)
+
+    # Calcula o score Chi quadrado para o grupo
+    chances = []
+    for offset in range(len(dicionario)):
+      ocorrenciasOffset = OcorrenciasOffset(ocorrenciasCaracteres, offset)
+      score = ChiQuadrado(ocorrenciasOffset, len(mensagem), expected_char_dist)
+      chances.append((dicionario[offset], score))
+
+    # Seleciona o melhor score
+    chances.sort(key=lambda x:x[1])
+    caracteresChave.append(chances[0][0])
+  
+  keyGuess = "".join(caracteresChave)
+  return keyGuess

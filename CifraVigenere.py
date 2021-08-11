@@ -3,18 +3,24 @@
 
 from Constantes import dicionario, exemplo_ingles, caracteres_ignorados,tamanho_dicionario
 
-def cifracao():
+def cifracao(tipoEntrada):
     mensagem = ""
     chave_cifracao = ""
     mensagem_cifrada = ""
 
-    # Input da mensagem
-    #mensagem = input("Mensagem a ser cifrada: ").upper()
-    mensagem = exemplo_ingles.rstrip("\n").upper()
-    for caracter in mensagem:
-        if caracter in caracteres_ignorados:
-            mensagem = mensagem.replace(caracter, "")
-    print()
+    if tipoEntrada == "1":
+        mensagem = exemplo_ingles.rstrip("\n").upper()
+        for caracter in mensagem:
+            if caracter in caracteres_ignorados:
+                mensagem = mensagem.replace(caracter, "")
+        print()
+    elif tipoEntrada == "2":
+        mensagem = input("Mensagem a ser cifrada: ").upper()
+        for caracter in mensagem:
+            if caracter in caracteres_ignorados:
+                mensagem = mensagem.replace(caracter, "")
+        print()
+
     tamanho_mensagem = len(mensagem)
 
     # Input da chave para cifrar
@@ -36,6 +42,7 @@ def cifracao():
     index_chave = 0
 
     print(mensagem)
+    print()
     for caracter in mensagem:
         if  caracter in dicionario:
             # Procura o index da letra no dicionário
@@ -64,7 +71,6 @@ def cifracao():
     print(mensagem_cifrada)
     print()
     return(mensagem_cifrada)
-
 
 def decifracao(possuiChave):
     mensagem = ""
