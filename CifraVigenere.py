@@ -70,6 +70,7 @@ def cifracao(tipoEntrada):
     print("---------------- Mensagem Cifrada ---------------- ")
     print()
     print(mensagem_cifrada)
+    print("---------------------------------------------------")
     print()
     return(mensagem_cifrada)
 
@@ -133,6 +134,7 @@ def decifracao(possuiChave):
         print("---------------- Mensagem Decifrada ---------------- ")
         print()
         print(mensagem_decifrada)
+        print("-----------------------------------------------------")
         print()
         return(mensagem_decifrada)
 

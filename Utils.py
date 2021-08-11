@@ -16,6 +16,7 @@ def Agrupa(cifra, start, tamanhosProvaveis):
     print("---------------- Menu de Opções ----------------")
     for opcao in range(len(tamanhosProvaveis)):
         print(opcao+1, " - ", tamanhosProvaveis[opcao][0])
+    print("------------------------------------------------")
     print()
 
     escolha = int(input("Qual o tamanho a ser testado? "))
@@ -50,6 +51,7 @@ def Agrupa(cifra, start, tamanhosProvaveis):
     for grupo, valor in grupos.items():
         print("Grupo ", grupo, ": ", valor)
         print()
+    print("-----------------------------------------------------")
     return grupos, skip
 
 # Calcula a frequência de cada letra no grupo
@@ -73,9 +75,9 @@ def OcorrenciasLetras(grupo):
 
     print("---------------- Frequência de cada letra do grupo ----------------")
     print()
-    print(ocorrencias)
+    print(frequencias)
     print()
-    return ocorrencias
+    return frequencias
 
 # Encontra sequências de caracteres repetidos na mensagem cifrada
 # para então calcular os fatores das distâncias entre as repetições
@@ -131,6 +133,7 @@ def SequenciasRepetidas(string):
     fatoresSorted = sorted(fatores.items(), key=lambda x: x[1], reverse=True)
     fatoresSorted = fatoresSorted[1:4]
     for i in fatoresSorted: print(fatoresSorted.index(i)+1, "º: Tamanho ", i[0], " com ", i[1], " ocorrências")
+    print("-------------------------------------------------------------------")
     print()
 
     return fatoresSorted

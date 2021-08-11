@@ -19,8 +19,16 @@ def main():
         if possuiChave == "2":
             fatoresOcorrencias = SequenciasRepetidas(mensagem)
             grupos, tamanhoChave = Agrupa(mensagem, 0, fatoresOcorrencias)
-            adivinhacao = AdivinhaChave(mensagem, grupos, tamanhoChave, frequenciasIngles)
+            print()
+            linguaDesejada = input("Deseja testar em Inglês (1) ou em Português (2) ? ")
+            print()
+            if linguaDesejada == "1":
+                adivinhacao = AdivinhaChave(mensagem, grupos, tamanhoChave, frequenciasIngles)
+            elif linguaDesejada == "2":
+                adivinhacao = AdivinhaChave(mensagem, grupos, tamanhoChave, frequenciasPortugues)
+            print("---------------- Chave provável ----------------")
             print(adivinhacao)
+            print()
             # for valor, grupo in grupos.items():
             #     # iC = CalculaCI(frequencias, tamanhoChave)
             #     # print(iC)
