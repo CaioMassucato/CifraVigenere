@@ -1,15 +1,29 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
+dicionario = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
+tamanho_dicionario = len(dicionario)
+
+caracteres_ignorados = r".,-;:()'{}[]/\?!0123456789_=+*@#$%¨&<>~´`"
+
+exemplo_ingles = "This template allows for the presentation of text in a language other than English alongside an English translation of that text. \
+                    It is primarily designed for rendering poetic texts and their translations in parallel columns that are responsive to devices with display sizes smaller than a personal computer's screen. \
+                    That is, on a large screen the text and translation are displayed side-by-side, reducing unsightly white space, but on a smaller screen they are presented one below the other.  \
+                    This template has three parameters. The first two are the original text and translation. The third is reserved for an optional citation of the passage: \
+                    Text and translation| (text or translation) | (text or translation) | citation information "
+
 def cifracao():
-    dicionario = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    tamanho_dicionario = len(dicionario)
     mensagem = ""
     chave_cifracao = ""
     mensagem_cifrada = ""
 
     # Input da mensagem
-    mensagem = input("Mensagem a ser cifrada: ").upper()
+    #mensagem = input("Mensagem a ser cifrada: ").upper()
+    mensagem = exemplo_ingles.rstrip("\n").upper()
+    for caracter in mensagem:
+        if caracter in caracteres_ignorados:
+            mensagem.replace(caracter, "")
     print()
     tamanho_mensagem = len(mensagem)
 
@@ -31,8 +45,9 @@ def cifracao():
 
     index_chave = 0
 
+    print(mensagem)
     for caracter in mensagem:
-        if caracter in dicionario:
+        if  caracter in dicionario:
             # Procura o index da letra no dicionário
             index = dicionario.find(caracter)
 
@@ -51,21 +66,26 @@ def cifracao():
             # Encontra caracter cifrado e monta a cifra
             caracter_cifrado = dicionario[index_cifra]
             mensagem_cifrada += caracter_cifrado
-    print("Mensagem Cifrada :: ")
+        elif caracter == " ":
+            mensagem_cifrada += " "
+            
+    print("---------------- Mensagem Cifrada ---------------- ")
+    print()
     print(mensagem_cifrada)
     print()
     return(mensagem_cifrada)
 
 
 def decifracao():
-    dicionario = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    tamanho_dicionario = len(dicionario)
     mensagem = ""
     chave_decifracao = ""
     mensagem_decifrada = ""
 
     # Input da mensagem
     mensagem = input("Mensagem a ser decifrada: ").upper()
+    for caracter in mensagem:
+        if caracter in caracteres_ignorados:
+            mensagem.replace(caracter, "")
     print()
     tamanho_mensagem = len(mensagem)
 
@@ -107,8 +127,11 @@ def decifracao():
             # Encontra caractere decifrado e monta a mensagem
             caracter_decifrado = dicionario[index_decifra]
             mensagem_decifrada += caracter_decifrado
+        elif caracter == " ":
+            mensagem_decifrada += " "
 
-    print("Mensagem Decifrada :: ")
+    print("---------------- Mensagem Decifrada ---------------- ")
+    print()
     print(mensagem_decifrada)
     print()
     return(mensagem_decifrada)

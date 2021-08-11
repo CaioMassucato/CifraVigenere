@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*
-
-
+ 
 from CifraVigenere import cifracao, decifracao
 from functools import reduce
 
@@ -11,15 +10,37 @@ def Fatores(n):
                 ([i, n//i] for i in range(1, int(n**0.5) + 1) if n % i == 0)))
 
 # Agrupa as letras dados uma cifra, um ponto de partida e um intervalo
-def Agrupa(cifra, start, skip):
+def Agrupa(cifra, start, tamanhosProvaveis):
+
+    print("---------------- Menu de Opções ----------------")
+    for opcao in range(len(tamanhosProvaveis)):
+        print(opcao+1, " - ", tamanhosProvaveis[opcao][0])
+    print()
+
+    escolha = int(input("Qual o tamanho a ser testado? "))
+    print()
+    if escolha == 1:
+        skip = tamanhosProvaveis[0][0]
+    elif escolha == 2:
+        skip = tamanhosProvaveis[1][0]
+    elif escolha == 3:
+        skip = tamanhosProvaveis[2][0]
+    else:
+        skip = -1
+        print("Programa finalizado. Escolha inválida ou nenhuma escolha.")
+        print()
+        return 0
+
     grupoLetras = ""
     for index in range(start, len(cifra), skip):
-        grupoLetras += cifra[index]
+            grupoLetras += cifra[index]
 
-    print("Grupo de Letras Selecionadas ::")
+    print("---------------- Grupo Selecionado ----------------")
+    print()
     print(grupoLetras)
     print()
     return grupoLetras
+
 
 # Calcula a frequência de cada letra no grupo
 def FrequenciaLetras(grupo):
@@ -40,7 +61,8 @@ def FrequenciaLetras(grupo):
         valor = ocorrencias.get(indice)
         frequencias[indice] = (valor/len(grupo)) * 100
 
-    print("Frequência de cada letra do grupo ::")
+    print("---------------- Frequência de cada letra do grupo ----------------")
+    print()
     print(frequencias)
     print()
     return frequencias
@@ -49,10 +71,12 @@ def FrequenciaLetras(grupo):
 # para então calcular os fatores das distâncias entre as repetições
 # para aproximar o tamanho da chave
 def SequenciasRepetidas(string):
+    fatores = {}
     repetidas = []
     indexRepetidas = []
     partida = 0
     
+    string = string.replace(" ", "")
     while partida <= len(string):
         for x in range(1, len(string)):
             substring = string[partida:x]
@@ -70,7 +94,6 @@ def SequenciasRepetidas(string):
 
                 # Calcula os fatores de cada distância entre repetições
                 fatoresAux = []
-                fatores = {}
                 for numero in indexRepetidas:
                     fatoresAux.append(Fatores(numero))
                 
@@ -87,15 +110,17 @@ def SequenciasRepetidas(string):
             if x == (len(string) -1):
                 partida +=1
 
-    print("Fatores e suas ocorrências::")
+    print("---------------- Tamanhos de chave mais prováveis: ----------------")
+    print()
     fatoresSorted = sorted(fatores.items(), key=lambda x: x[1], reverse=True)
-    for i in fatoresSorted[1:20]: print(i[0], ": ", i[1])
+    fatoresSorted = fatoresSorted[1:4]
+    for i in fatoresSorted: print(fatoresSorted.index(i)+1, "º: Tamanho ", i[0], " com ", i[1], " ocorrências")
     print()
 
-    return fatores
+    return fatoresSorted
 
 # Testes
 cifraTeste = cifracao()
-SequenciasRepetidas(cifraTeste)
-grupo1 = Agrupa(cifraTeste, 0, 3)
+TamanhosTeste = SequenciasRepetidas(cifraTeste)
+grupo1 = Agrupa(cifraTeste, 0, TamanhosTeste)
 FrequenciaLetras(grupo1)
