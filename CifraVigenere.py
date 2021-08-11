@@ -72,6 +72,7 @@ def cifracao(tipoEntrada):
     print(mensagem_cifrada)
     print("---------------------------------------------------")
     print()
+    print()
     return(mensagem_cifrada)
 
 def decifracao(possuiChave):
@@ -94,6 +95,7 @@ def decifracao(possuiChave):
             if letra not in dicionario:
                 print("Chave Inválida, tente novamente.")
                 return "Chave inválida"
+        print()
         print()
 
         mensagem = mensagem.replace(" ","")
@@ -135,6 +137,7 @@ def decifracao(possuiChave):
         print()
         print(mensagem_decifrada)
         print("-----------------------------------------------------")
+        print()
         print()
         return(mensagem_decifrada)
 
